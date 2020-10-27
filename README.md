@@ -2,7 +2,10 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 # watch-cursor
-> Display cursor from all live windows.
+> Show all cursors from other windows.
+
+This minor mode display all cursors when there are 2 or more windows
+displaying the same buffer at a time.
 
 ## Usage
 

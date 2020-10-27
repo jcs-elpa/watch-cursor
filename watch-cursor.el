@@ -1,10 +1,10 @@
-;;; watch-cursor.el --- Display cursor from all live windows  -*- lexical-binding: t; -*-
+;;; watch-cursor.el --- Show all cursors from other windows  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2020  Shen, Jen-Chieh
 ;; Created date 2020-10-27 13:25:37
 
 ;; Author: Shen, Jen-Chieh <jcs090218@gmail.com>
-;; Description: Display cursor from all live windows.
+;; Description: Show all cursors from other windows.
 ;; Keyword: cursor
 ;; Version: 0.1.0
 ;; Package-Requires: ((emacs "24.3"))
@@ -27,13 +27,14 @@
 
 ;;; Commentary:
 ;;
-;; Display cursor from all live windows.
+;; This minor mode display all cursors when there are 2 or more windows
+;; displaying the same buffer at a time.
 ;;
 
 ;;; Code:
 
 (defgroup watch-cursor nil
-  "Display cursor from all live windows."
+  "Show all cursors from other windows."
   :prefix "watch-cursor-"
   :group 'tool
   :link '(url-link :tag "Repository" "https://github.com/jcs-elpa/watch-cursor"))
@@ -83,7 +84,9 @@
   (setq watch-cursor--overlays nil))
 
 (defun watch-cursor--make-overlay (pt win owner-win)
-  "Create a overlay at PT inside WIN."
+  "Create a overlay at PT inside WIN.
+
+Argument OWNER-WIN is for echoing tip."
   (let ((ol (make-overlay pt (1+ pt))))
     (overlay-put ol 'face 'watch-cursor-face)
     (overlay-put ol 'priority 0)

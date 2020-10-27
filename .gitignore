@@ -1,0 +1,9 @@
+# ignore these directories.
+/.git
+/recipes
+/test
+watch-cursor-pkg.el
+watch-cursor-autoloads.el
+
+# ignore generated files.
+*.elc

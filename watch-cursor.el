@@ -71,7 +71,7 @@
   (setq watch-cursor--overlays nil))
 
 (defun watch-cursor--make-overlay (pt win)
-  "Create a overlay at PT."
+  "Create a overlay at PT inside WIN."
   (let ((ol (make-overlay pt (1+ pt))))
     (overlay-put ol 'face 'watch-cursor-face)
     (overlay-put ol 'priority 0)

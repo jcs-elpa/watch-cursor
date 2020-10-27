@@ -43,6 +43,11 @@
   "Face for fake cursor."
   :group 'watch-cursor)
 
+(defcustom watch-cursor-delay 0.2
+  "Seconds of delay before displaying fake cursors."
+  :type 'float
+  :group 'watch-cursor)
+
 (defvar-local watch-cursor--buffer nil
   "Buffer we are currently watching.")
 
@@ -52,9 +57,16 @@
 (defvar-local watch-cursor--overlays '()
   "List of overlay represent as fake cursors.")
 
+(defvar-local watch-cursor--timer nil
+  "Timer to display fake cursors.")
+
 ;;
 ;; (@* "Utility" )
 ;;
+
+(defun watch-cursor--kill-timer (timer)
+  "Kill TIMER the safe way."
+  (when (timerp timer) (cancel-timer timer)))
 
 (defmacro watch-cursor--walk-windows (&rest body)
   "Macro for function `walk-windows', execute BODY for each window."
@@ -100,14 +112,20 @@
     (when (watch-cursor--watching-p)
       (push (cons (selected-window) (point)) watch-cursor--cursors))))
 
+(defun watch-cursor--display ()
+  "Display all fake cursors."
+  (watch-cursor--get-cursors-data)
+  (watch-cursor--make-overlays))
+
 (defun watch-cursor--pre-command ()
   "Pre-command hook for `watch-cursor'."
   (watch-cursor--delete-overlays))
 
 (defun watch-cursor--post-command ()
   "Post-command hook for `watch-cursor'."
-  (watch-cursor--get-cursors-data)
-  (watch-cursor--make-overlays))
+  (watch-cursor--kill-timer watch-cursor--timer)
+  (setq watch-cursor--timer (run-with-timer watch-cursor-delay nil
+                                            #'watch-cursor--display)))
 
 ;;
 ;; (@* "Entry" )

@@ -39,8 +39,9 @@
   :link '(url-link :tag "Repository" "https://github.com/jcs-elpa/watch-cursor"))
 
 (defface watch-cursor-face
-  '((t :background "snow3"))
-  "Face for fake cursor.")
+  '((t :box '(:line-width 0 :color "#40FF40" :style nil)))
+  "Face for fake cursor."
+  :group 'watch-cursor)
 
 (defvar-local watch-cursor--buffer nil
   "Buffer we are currently watching.")
@@ -69,19 +70,24 @@
   (dolist (ov watch-cursor--overlays) (delete-overlay ov))
   (setq watch-cursor--overlays nil))
 
-(defun watch-cursor--make-overlay (pt)
+(defun watch-cursor--make-overlay (pt win)
   "Create a overlay at PT."
   (let ((ol (make-overlay pt (1+ pt))))
     (overlay-put ol 'face 'watch-cursor-face)
     (overlay-put ol 'priority 0)
+    (overlay-put ol 'window win)
     (push ol watch-cursor--overlays)  ; NOTE: Eventually get managed bt list.
     ol))
 
 (defun watch-cursor--make-overlays ()
   "Make all fake cursors."
   (when (< 1 (length watch-cursor--cursors))
-    (dolist (cr watch-cursor--cursors)
-      (watch-cursor--make-overlay cr))))
+    (let (win pt)
+      (watch-cursor--walk-windows
+        (dolist (data watch-cursor--cursors)
+          (setq win (car data) pt (cdr data))
+          (unless (equal win (selected-window))
+            (watch-cursor--make-overlay pt (selected-window))))))))
 
 ;;
 ;; (@* "Core" )
@@ -92,7 +98,7 @@
   (setq watch-cursor--cursors '())
   (watch-cursor--walk-windows
     (when (watch-cursor--watching-p)
-      (push (point) watch-cursor--cursors))))
+      (push (cons (selected-window) (point)) watch-cursor--cursors))))
 
 (defun watch-cursor--pre-command ()
   "Pre-command hook for `watch-cursor'."

@@ -56,7 +56,7 @@
 ;;
 
 (defmacro watch-cursor--walk-windows (&rest body)
-  "Wrapper for function `walk-windows'."
+  "Macro for function `walk-windows', execute BODY for each window."
   (declare (indent 0) (debug t))
   `(walk-windows (lambda (win) (select-window win) (progn ,@body)) nil t))
 
@@ -79,8 +79,9 @@
 
 (defun watch-cursor--make-overlays ()
   "Make all fake cursors."
-  (dolist (cr watch-cursor--cursors)
-    (watch-cursor--make-overlay cr)))
+  (when (< 1 (length watch-cursor--cursors))
+    (dolist (cr watch-cursor--cursors)
+      (watch-cursor--make-overlay cr))))
 
 ;;
 ;; (@* "Core" )
@@ -93,9 +94,12 @@
     (when (watch-cursor--watching-p)
       (push (point) watch-cursor--cursors))))
 
+(defun watch-cursor--pre-command ()
+  "Pre-command hook for `watch-cursor'."
+  (watch-cursor--delete-overlays))
+
 (defun watch-cursor--post-command ()
-  ""
-  (watch-cursor--delete-overlays)
+  "Post-command hook for `watch-cursor'."
   (watch-cursor--get-cursors-data)
   (watch-cursor--make-overlays))
 
@@ -106,11 +110,13 @@
 (defun watch-cursor--enable ()
   "Enable `watch-cursor' in current buffer."
   (setq watch-cursor--buffer (current-buffer))
+  (add-hook 'pre-command-hook 'watch-cursor--pre-command nil t)
   (add-hook 'post-command-hook 'watch-cursor--post-command nil t))
 
 (defun watch-cursor--disable ()
   "Disable `watch-cursor' in current buffer."
   (watch-cursor--delete-overlays)
+  (remove-hook 'pre-command-hook 'watch-cursor--pre-command t)
   (remove-hook 'post-command-hook 'watch-cursor--post-command t))
 
 ;;;###autoload

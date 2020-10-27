@@ -38,12 +38,66 @@
   :group 'tool
   :link '(url-link :tag "Repository" "https://github.com/jcs-elpa/watch-cursor"))
 
+(defface watch-cursor-face
+  '((t :background "snow3"))
+  "Face for fake cursor.")
+
 (defvar-local watch-cursor--buffer nil
-  "")
+  "Buffer we are currently watching.")
+
+(defvar-local watch-cursor--cursors '()
+  "List of cursor data.")
+
+(defvar-local watch-cursor--overlays '()
+  "List of overlay represent as fake cursors.")
+
+;;
+;; (@* "Utility" )
+;;
+
+(defmacro watch-cursor--walk-windows (&rest body)
+  "Wrapper for function `walk-windows'."
+  (declare (indent 0) (debug t))
+  `(walk-windows (lambda (win) (select-window win) (progn ,@body)) nil t))
+
+(defun watch-cursor--watching-p ()
+  "Return non-nil if current buffer is the buffer we are watching."
+  (eq watch-cursor--buffer (current-buffer)))
+
+(defun watch-cursor--delete-overlays ()
+  "Delete all overlays in list."
+  (dolist (ov watch-cursor--overlays) (delete-overlay ov))
+  (setq watch-cursor--overlays nil))
+
+(defun watch-cursor--make-overlay (pt)
+  "Create a overlay at PT."
+  (let ((ol (make-overlay pt (1+ pt))))
+    (overlay-put ol 'face 'watch-cursor-face)
+    (overlay-put ol 'priority 0)
+    (push ol watch-cursor--overlays)  ; NOTE: Eventually get managed bt list.
+    ol))
+
+(defun watch-cursor--make-overlays ()
+  "Make all fake cursors."
+  (dolist (cr watch-cursor--cursors)
+    (watch-cursor--make-overlay cr)))
+
+;;
+;; (@* "Core" )
+;;
+
+(defun watch-cursor--get-cursors-data ()
+  "Update cursor data once."
+  (setq watch-cursor--cursors '())
+  (watch-cursor--walk-windows
+    (when (watch-cursor--watching-p)
+      (push (point) watch-cursor--cursors))))
 
 (defun watch-cursor--post-command ()
   ""
-  )
+  (watch-cursor--delete-overlays)
+  (watch-cursor--get-cursors-data)
+  (watch-cursor--make-overlays))
 
 ;;
 ;; (@* "Entry" )
@@ -56,6 +110,7 @@
 
 (defun watch-cursor--disable ()
   "Disable `watch-cursor' in current buffer."
+  (watch-cursor--delete-overlays)
   (remove-hook 'post-command-hook 'watch-cursor--post-command t))
 
 ;;;###autoload

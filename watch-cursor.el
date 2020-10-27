@@ -30,6 +30,12 @@
 ;; This minor mode display all cursors when there are 2 or more windows
 ;; displaying the same buffer at a time.
 ;;
+;; To enable this minor mode, please do the following execution
+;;
+;;   `(watch-cursor-mode 1)`
+;;
+;; You can customize the fake cursors by customizing the face `watch-cursor-face'.
+;;
 
 ;;; Code:
 

@@ -1,3 +1,4 @@
+export EMACS ?= $(shell which emacs)
 SHELL := /usr/bin/env bash
 
 EMACS ?= emacs

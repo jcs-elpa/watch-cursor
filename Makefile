@@ -1,4 +1,3 @@
-export EMACS ?= $(shell which emacs)
 SHELL := /usr/bin/env bash
 
 EMACS ?= emacs
@@ -19,7 +18,7 @@ build:
 
 compile:
 	@echo "Compiling..."
-	@$(CASK) $(EMACS) -Q --batch \
+	@$(CASK) $(EMACS) -nw --batch \
 		-L . \
 		--eval '(setq byte-compile-error-on-warn t)' \
 		-f batch-byte-compile $(PKG-FILES)

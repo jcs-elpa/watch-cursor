@@ -12,9 +12,9 @@ TEST-FILES := $(shell ls test/watch-cursor-*.el)
 ci: clean build compile
 
 build:
-	EMACS=$(EMACS) $(CASK) install
-    EMACS=$(EMACS) $(CASK) build
-    EMACS=$(EMACS) $(CASK) clean-elc
+	EMACS=$(EMACS) cask install
+	EMACS=$(EMACS) cask build
+	EMACS=$(EMACS) cask clean-elc
 
 compile:
 	@echo "Compiling..."

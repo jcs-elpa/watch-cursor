@@ -18,7 +18,7 @@ build:
 
 compile:
 	@echo "Compiling..."
-	@$(CASK) $(EMACS) -nw --batch \
+	@$(EMACS) -nw --batch \
 		-L . \
 		--eval '(setq byte-compile-error-on-warn t)' \
 		-f batch-byte-compile $(PKG-FILES)

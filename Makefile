@@ -12,11 +12,13 @@ TEST-FILES := $(shell ls test/watch-cursor-*.el)
 ci: clean build compile
 
 build:
-	$(CASK) install
+	EMACS=$(EMACS) $(CASK) install
+	EMACS=$(EMACS) $(CASK) build
+	EMACS=$(EMACS) $(CASK) clean-elc
 
 compile:
 	@echo "Compiling..."
-	@$(CASK) $(EMACS) -Q --batch \
+	@$(EMACS) -nw --batch \
 		-L . \
 		--eval '(setq byte-compile-error-on-warn t)' \
 		-f batch-byte-compile $(PKG-FILES)

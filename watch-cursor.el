@@ -51,7 +51,7 @@
   :group 'watch-cursor)
 
 (defcustom watch-cursor-delay 0.2
-  "Seconds of delay before displaying fake cursors. CI test errrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrl"
+  "Seconds of delay before displaying fake cursors."
   :type 'float
   :group 'watch-cursor)
 

@@ -51,7 +51,7 @@
   :group 'watch-cursor)
 
 (defcustom watch-cursor-delay 0.2
-  "Seconds of delay before displaying fake cursors.ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+  "Seconds of delay before displaying fake cursors.dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddx"
   :type 'float
   :group 'watch-cursor)
 

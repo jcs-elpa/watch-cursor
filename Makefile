@@ -7,7 +7,7 @@ PKG-FILES := watch-cursor.el
 
 TEST-FILES := $(shell ls test/watch-cursor-*.el)
 
-.PHONY: clean checkdoc lint build compile unix-test
+.PHONY: clean checkdoc lint install compile unix-test
 
 ci: clean compile install
 

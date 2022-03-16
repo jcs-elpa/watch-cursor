@@ -5,5 +5,7 @@
 watch-cursor-pkg.el
 watch-cursor-autoloads.el
 
+/.eask
+
 # ignore generated files.
 *.elc

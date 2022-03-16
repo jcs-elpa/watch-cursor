@@ -46,7 +46,7 @@ jobs:
               with:
                   version: ${{ matrix.emacs-version }}
 
-            - uses: emacs-cask/setup-eask@master
+            - uses: emacs-eask/setup-eask@master
               with:
                   version: 'snapshot'
 

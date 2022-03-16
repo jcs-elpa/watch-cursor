@@ -1,7 +1,7 @@
 SHELL := /usr/bin/env bash
 
 EMACS ?= emacs
-CASK ?= cask
+EASK ?= eask
 
 PKG-FILES := watch-cursor.el
 
@@ -9,22 +9,17 @@ TEST-FILES := $(shell ls test/watch-cursor-*.el)
 
 .PHONY: clean checkdoc lint build compile unix-test
 
-ci: clean build compile
+ci: clean compile install
 
-build:
-	$(CASK) install
-	$(CASK) build
+install:
+	$(EASK) install
 
 compile:
-	@echo "Compiling..."
-	@$(CASK) $(EMACS) -Q --batch \
-		-L . \
-		--eval '(setq byte-compile-error-on-warn t)' \
-		-f batch-byte-compile $(PKG-FILES)
+	$(EASK) compile
 
 unix-test:
 	@echo "Testing..."
-	$(CASK) exec ert-runner -L . $(LOAD-TEST-FILES) -t '!no-win' -t '!org'
+	$(EASK) exec ert-runner -L . $(LOAD-TEST-FILES) -t '!no-win' -t '!org'
 
 clean:
 	rm -rf .cask *.elc

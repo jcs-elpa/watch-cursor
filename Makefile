@@ -11,6 +11,7 @@ ci: clean install compile
 
 install:
 	@echo "Installing..."
+	$(EASK) package
 	$(EASK) install
 
 compile:
@@ -22,4 +23,4 @@ unix-test:
 	$(EASK) exec ert-runner -L . $(LOAD-TEST-FILES) -t '!no-win' -t '!org'
 
 clean:
-	rm -rf .cask *.elc
+	$(EASK) clean-all

@@ -1,11 +1,14 @@
-# ignore these directories.
+# ignore these directories
 /.git
 /recipes
-/test
-watch-cursor-pkg.el
-watch-cursor-autoloads.el
 
-/.eask
-
-# ignore generated files.
+# ignore generated files
 *.elc
+
+# eask packages
+.eask/
+dist/
+
+# packaging
+*-autoloads.el
+*-pkg.el

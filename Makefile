@@ -5,7 +5,7 @@ EASK ?= eask
 
 TEST-FILES := $(shell ls test/watch-cursor-*.el)
 
-.PHONY: clean checkdoc lint install compile unix-test
+.PHONY: clean checkdoc lint install compile
 
 ci: clean install compile
 
@@ -18,7 +18,7 @@ compile:
 	@echo "Compiling..."
 	$(EASK) compile
 
-unix-test:
+test:
 	@echo "Testing..."
 	$(EASK) exec ert-runner -L . $(LOAD-TEST-FILES) -t '!no-win' -t '!org'
 

@@ -2,6 +2,9 @@
          "0.1.1"
          "Show all cursors from other windows")
 
+(website-url "https://github.com/jcs-elpa/watch-cursor")
+(keywords "cursor")
+
 (package-file "watch-cursor.el")
 
 (source "melpa")

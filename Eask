@@ -3,7 +3,7 @@
          "Show all cursors from other windows")
 
 (website-url "https://github.com/jcs-elpa/watch-cursor")
-(keywords "cursor")
+(keywords "convenience" "cursor")
 
 (package-file "watch-cursor.el")
 

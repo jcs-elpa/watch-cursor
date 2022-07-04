@@ -7,7 +7,7 @@
 ;; URL: https://github.com/jcs-elpa/watch-cursor
 ;; Version: 0.1.1
 ;; Package-Requires: ((emacs "24.3"))
-;; Keywords: cursor
+;; Keywords: convenience cursor
 
 ;; This file is NOT part of GNU Emacs.
 

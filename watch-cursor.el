@@ -1,6 +1,6 @@
 ;;; watch-cursor.el --- Show all cursors from other windows  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2020-2024  Shen, Jen-Chieh
+;; Copyright (C) 2020-2025  Shen, Jen-Chieh
 ;; Created date 2020-10-27 13:25:37
 
 ;; Author: Shen, Jen-Chieh <jcs090218@gmail.com>

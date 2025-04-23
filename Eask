@@ -1,3 +1,5 @@
+;; -*- mode: eask; lexical-binding: t -*-
+
 (package "watch-cursor"
          "0.1.1"
          "Show all cursors from other windows")
